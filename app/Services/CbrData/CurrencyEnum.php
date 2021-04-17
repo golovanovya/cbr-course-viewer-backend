@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services\CbrData;
 
@@ -7,6 +8,7 @@ use MyCLabs\Enum\Enum;
 /**
  * Class CurrencyEnum
  * @package App\Services\CbrData
+ * @method static RUR()
  */
 class CurrencyEnum extends Enum
 {

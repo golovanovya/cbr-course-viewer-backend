@@ -1,8 +1,12 @@
 <?php
 
 use Cache\Adapter\Redis\RedisCachePool;
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 use Psr\SimpleCache\CacheInterface;
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -63,13 +67,20 @@ $app->singleton(
 );
 
 $app->singleton(
+    ClientInterface::class,
+    Client::class
+);
+
+$app->singleton(
     RequestInterface::class,
     function () {
-        return new Request(
-            'POST',
-            'http://www.cbr.ru/scripts/XML_daily.asp'
-        );
+        return new Request('GET', '');
     }
+);
+
+$app->singleton(
+    UriInterface::class,
+    Uri::class
 );
 
 /*

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace App\Services\CbrData;
+namespace App\Services\CbrData\Exceptions;
 
 use Exception;
 
