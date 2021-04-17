@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bb78f47f8d603e2788aa030a8c8e240",
+    "content-hash": "3b22e28a607775d9bae5baad9857f791",
     "packages": [
         {
             "name": "brick/math",
@@ -1645,54 +1645,6 @@
             "description": "The Illuminate Queue package.",
             "homepage": "https://laravel.com",
             "time": "2020-11-18T14:37:23+00:00"
-        },
-        {
-            "name": "illuminate/redis",
-            "version": "v7.30.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/redis.git",
-                "reference": "e2bbd9aecca8d1a195f7f113c5620812b2c73303"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/redis/zipball/e2bbd9aecca8d1a195f7f113c5620812b2c73303",
-                "reference": "e2bbd9aecca8d1a195f7f113c5620812b2c73303",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "^7.0",
-                "illuminate/support": "^7.0",
-                "php": "^7.2.5|^8.0"
-            },
-            "suggest": {
-                "ext-redis": "Required to use the phpredis connector (^4.0|^5.0).",
-                "predis/predis": "Required to use the predis connector (^1.1.2)."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "7.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Redis\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The Illuminate Redis package.",
-            "homepage": "https://laravel.com",
-            "time": "2020-11-27T16:00:49+00:00"
         },
         {
             "name": "illuminate/session",
@@ -4673,57 +4625,6 @@
                 "instantiate"
             ],
             "time": "2020-11-10T18:47:58+00:00"
-        },
-        {
-            "name": "fzaninotto/faker",
-            "version": "v1.9.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "848d8125239d7dbf8ab25cb7f054f1a630e68c2e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/848d8125239d7dbf8ab25cb7f054f1a630e68c2e",
-                "reference": "848d8125239d7dbf8ab25cb7f054f1a630e68c2e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.3.3 || ^7.0"
-            },
-            "require-dev": {
-                "ext-intl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7",
-                "squizlabs/php_codesniffer": "^2.9.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.9-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Faker\\": "src/Faker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "François Zaninotto"
-                }
-            ],
-            "description": "Faker is a PHP library that generates fake data for you.",
-            "keywords": [
-                "data",
-                "faker",
-                "fixtures"
-            ],
-            "abandoned": true,
-            "time": "2020-12-11T09:56:16+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",

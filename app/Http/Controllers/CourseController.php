@@ -48,6 +48,7 @@ class CourseController extends Controller
     }
 
     /**
+     * Returns available currency ISO codes
      * @return JsonResponse
      */
     public function getAvailableCurrencies(): JsonResponse

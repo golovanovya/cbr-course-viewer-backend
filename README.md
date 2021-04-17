@@ -1,24 +1,24 @@
-# Lumen PHP Framework
+# CBR Currency Course Viewer Backend 
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+Based on Laravel Lumen.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+### Available routes
 
-## Official Documentation
+`/course/{targetCurrency}/{baseCurrency}/{date}` - returns target currency course by base currency on specific date
+`/availableCurrencies` - returns available currency ISO codes
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+### Installation
 
-## Contributing
+1. `git clone`
+2. `composer install`
+3. Install Redis for caching
+4. Create `.env` based on `.env.example`
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To run:
+1. Local server - `php -S localhost:8000 -t public`
+2. Nginx - see https://laravel.com/docs/8.x/deployment#nginx
+3. Apache - see https://clouding.io/hc/en-us/articles/360013637759-How-To-Setup-Lumen-API-on-Ubuntu
 
-## Security Vulnerabilities
+### Tests
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Run `phpunit` globally or `./vendor/phpunit/phpunit/phpunit` locally
