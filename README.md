@@ -5,6 +5,7 @@ Based on Laravel Lumen.
 ### Available routes
 
 `/course/{targetCurrency}/{baseCurrency}/{date}` - returns target currency course by base currency on specific date
+
 `/availableCurrencies` - returns available currency ISO codes
 
 ### Installation
