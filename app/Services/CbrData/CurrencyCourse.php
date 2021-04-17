@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Services\CbrData;
 
+use App\Services\CbrData\Exceptions\CbrDataInternalException;
+
 /**
  * Class CbrDataDTO
  * @package App\Services\CbrData
@@ -25,13 +27,25 @@ class CurrencyCourse
     private $course;
 
     /**
-     * CurrencyCourseDTO constructor.
+     * CurrencyCourse constructor.
      * @param CurrencyEnum $currencyEnum
      * @param int $nominal
      * @param float $course
+     * @throws CbrDataInternalException
      */
     public function __construct(CurrencyEnum $currencyEnum, int $nominal, float $course)
     {
+        if ($nominal <= 0) {
+            throw new CbrDataInternalException(
+                "Incorrect nominal {$nominal} for currency {$currencyEnum->getValue()}"
+            );
+        }
+        if ($course <= 0) {
+            throw new CbrDataInternalException(
+                "Incorrect course {$course} for currency {$currencyEnum->getValue()}"
+            );
+        }
+
         $this->currencyEnum = $currencyEnum;
         $this->nominal = $nominal;
         $this->course = $course;

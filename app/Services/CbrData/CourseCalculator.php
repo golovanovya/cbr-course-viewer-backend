@@ -36,12 +36,6 @@ class CourseCalculator
         if ($cbrBaseValue === null) {
             throw new CbrDataInternalException('Course not existed for currency' . $baseCurrency->getValue());
         }
-        if ($cbrTargetValue === 0) {
-            throw new CbrDataInternalException('Incorrect course for currency' . $targetCurrency->getValue());
-        }
-        if ($cbrBaseValue === 0) {
-            throw new CbrDataInternalException('Incorrect course for currency' . $baseCurrency->getValue());
-        }
 
         return $cbrTargetValue / $cbrBaseValue;
     }

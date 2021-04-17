@@ -103,7 +103,7 @@ class CbrDataProvider
                 $result[] = new CurrencyCourse(
                     new CurrencyEnum((string) $currency->CharCode),
                     (int) $currency->Nominal,
-                    (float) $currency->Value
+                    (float) str_replace(',', '.', $currency->Value)
                 );
             }
         } catch (UnexpectedValueException $e) {

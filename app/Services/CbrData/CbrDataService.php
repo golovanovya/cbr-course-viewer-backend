@@ -52,9 +52,9 @@ class CbrDataService
 
     /**
      * Returns target currency course by base currency on specific date
-     * @param string $targetCurrencyISOCode
-     * @param string $baseCurrencyISOCode
-     * @param string $date
+     * @param string $targetCurrencyISOCode ISO char code
+     * @param string $baseCurrencyISOCode ISO char code
+     * @param string $date YYYY-MM-DD
      * @return float
      * @throws CbrDataExternalException|CbrDataInternalException
      */
@@ -95,7 +95,7 @@ class CbrDataService
 
     /**
      * Returns datetime object by given date string (in past or today) in YYYY-MM-DD format
-     * @param string $date
+     * @param string $date YYYY-MM-DD
      * @return DateTime
      * @throws CbrDataExternalException
      */
