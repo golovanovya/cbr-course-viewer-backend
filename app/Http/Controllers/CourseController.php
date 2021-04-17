@@ -35,7 +35,7 @@ class CourseController extends Controller
      * @param string $date YYYY-MM-DD
      * @return JsonResponse
      */
-    public function get(string $targetCurrency, string $baseCurrency, string $date): JsonResponse
+    public function getCourse(string $targetCurrency, string $baseCurrency, string $date): JsonResponse
     {
         try {
             $course = $this->cbrDataService->getCourseOnDate($targetCurrency, $baseCurrency, $date);
@@ -45,5 +45,13 @@ class CourseController extends Controller
         } catch (CbrDataInternalException $e) {
             return response()->json(['error' => 'Internal server error'], 500);
         }
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getAvailableCurrencies(): JsonResponse
+    {
+        return response()->json(['currencies' => $this->cbrDataService->getCurrencies()]);
     }
 }

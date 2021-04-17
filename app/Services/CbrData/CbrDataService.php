@@ -79,6 +79,15 @@ class CbrDataService
     }
 
     /**
+     * Returns available currency ISO codes
+     * @return string[] Array of ISO codes
+     */
+    public function getCurrencies(): array
+    {
+        return array_values(CurrencyEnum::toArray());
+    }
+
+    /**
      * Returns currency enum by currency ISO code
      * @param string $currencyCode ISO char code
      * @return CurrencyEnum

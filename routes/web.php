@@ -11,4 +11,5 @@
 |
 */
 
-$router->get('/course/{targetCurrency}/{baseCurrency}/{date}', 'CourseController@get');
+$router->get('/course/{targetCurrency}/{baseCurrency}/{date}', 'CourseController@getCourse');
+$router->get('/availableCurrencies', 'CourseController@getAvailableCurrencies');
