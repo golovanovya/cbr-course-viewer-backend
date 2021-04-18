@@ -3,7 +3,7 @@
 use App\Services\CbrData\CourseCalculator;
 use App\Services\CbrData\CurrencyCourse;
 use App\Services\CbrData\CurrencyEnum;
-use App\Services\CbrData\Exceptions\CbrDataInternalException;
+use App\Services\CbrData\Exceptions\CbrDataExternalException;
 
 /**
  * Class CourseCalculatorTest
@@ -59,7 +59,7 @@ class CourseCalculatorTest extends TestCase
 
     public function testExceptionOnCoursesDoesntHaveTargetCurrency()
     {
-        $this->expectException(CbrDataInternalException::class);
+        $this->expectException(CbrDataExternalException::class);
         $this->courseCalculator->calculate(
             CurrencyEnum::USD(),
             CurrencyEnum::EUR(),
@@ -72,7 +72,7 @@ class CourseCalculatorTest extends TestCase
 
     public function testExceptionOnCoursesDoesntHaveBaseCurrency()
     {
-        $this->expectException(CbrDataInternalException::class);
+        $this->expectException(CbrDataExternalException::class);
         $this->courseCalculator->calculate(
             CurrencyEnum::USD(),
             CurrencyEnum::EUR(),

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\CbrData;
 
-use App\Services\CbrData\Exceptions\CbrDataInternalException;
+use App\Services\CbrData\Exceptions\CbrDataExternalException;
 
 /**
  * Class CourseCalculator
@@ -16,7 +16,7 @@ class CourseCalculator
      * @param CurrencyEnum $baseCurrency
      * @param CurrencyCourse[] $currencyCourses
      * @return float
-     * @throws CbrDataInternalException
+     * @throws CbrDataExternalException
      */
     public function calculate(CurrencyEnum $targetCurrency, CurrencyEnum $baseCurrency, array $currencyCourses): float
     {
@@ -31,10 +31,14 @@ class CourseCalculator
             }
         }
         if ($cbrTargetValue === null) {
-            throw new CbrDataInternalException('Course not existed for currency' . $targetCurrency->getValue());
+            throw new CbrDataExternalException(
+                'Course not existed for currency ' . $targetCurrency->getValue() . ' on given date'
+            );
         }
         if ($cbrBaseValue === null) {
-            throw new CbrDataInternalException('Course not existed for currency' . $baseCurrency->getValue());
+            throw new CbrDataExternalException(
+                'Course not existed for currency ' . $baseCurrency->getValue() . ' on given date'
+            );
         }
 
         return $cbrTargetValue / $cbrBaseValue;

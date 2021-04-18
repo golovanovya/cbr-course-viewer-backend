@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CorsMiddleware;
 use Cache\Adapter\Redis\RedisCachePool;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -51,6 +52,10 @@ $app->singleton(
     UriInterface::class,
     Uri::class
 );
+
+$app->middleware([
+    CorsMiddleware::class,
+]);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',

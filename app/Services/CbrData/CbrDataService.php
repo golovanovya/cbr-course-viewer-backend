@@ -65,9 +65,18 @@ class CbrDataService
         $dateTime = $this->getDateTimeByDateString($date);
 
         $currencyCourses = $this->getCurrencyCoursesOnDate($dateTime);
+
+        // Russian rouble since 2001
+        $currencyCourses[] = new CurrencyCourse(
+            CurrencyEnum::RUB(),
+            1,
+            1
+        );
+
+        // Russian rouble since 1994
         $currencyCourses[] = new CurrencyCourse(
             CurrencyEnum::RUR(),
-            1,
+            1000,
             1
         );
 

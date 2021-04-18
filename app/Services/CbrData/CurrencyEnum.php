@@ -9,6 +9,7 @@ use MyCLabs\Enum\Enum;
  * Class CurrencyEnum
  * @package App\Services\CbrData
  * @method static RUR()
+ * @method static RUB()
  * @method static AUD()
  * @method static AZN()
  * @method static GBP()
@@ -43,10 +44,31 @@ use MyCLabs\Enum\Enum;
  * @method static ZAR()
  * @method static KRW()
  * @method static JPY()
+ * @method static ATS()
+ * @method static AZM()
+ * @method static BYB()
+ * @method static BEF()
+ * @method static GRD()
+ * @method static IEP()
+ * @method static ISK()
+ * @method static ESP()
+ * @method static ITL()
+ * @method static LVL()
+ * @method static LTL()
+ * @method static DEM()
+ * @method static NLG()
+ * @method static PTE()
+ * @method static TRL()
+ * @method static FIM()
+ * @method static FRF()
+ * @method static XEU()
+ * @method static EEK()
+ * @method static BYR()
  */
 class CurrencyEnum extends Enum
 {
     private const RUR = 'RUR';
+    private const RUB = 'RUB';
     private const AUD = 'AUD';
     private const AZN = 'AZN';
     private const GBP = 'GBP';
@@ -81,4 +103,24 @@ class CurrencyEnum extends Enum
     private const ZAR = 'ZAR';
     private const KRW = 'KRW';
     private const JPY = 'JPY';
+    private const ATS = 'ATS';
+    private const AZM = 'AZM';
+    private const BYB = 'BYB';
+    private const BEF = 'BEF';
+    private const GRD = 'GRD';
+    private const IEP = 'IEP';
+    private const ISK = 'ISK';
+    private const ESP = 'ESP';
+    private const ITL = 'ITL';
+    private const LVL = 'LVL';
+    private const LTL = 'LTL';
+    private const DEM = 'DEM';
+    private const NLG = 'NLG';
+    private const PTE = 'PTE';
+    private const TRL = 'TRL';
+    private const FIM = 'FIM';
+    private const FRF = 'FRF';
+    private const XEU = 'XEU';
+    private const EEK = 'EEK';
+    private const BYR = 'BYR';
 }

@@ -39,7 +39,7 @@ class CourseController extends Controller
     {
         try {
             $course = $this->cbrDataService->getCourseOnDate($targetCurrency, $baseCurrency, $date);
-            return response()->json(['course' => (float) number_format($course, 4)]);
+            return response()->json(['course' => (float) number_format($course, 4, '.', '')]);
         } catch (CbrDataExternalException $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         } catch (CbrDataInternalException $e) {

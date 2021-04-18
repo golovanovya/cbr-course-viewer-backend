@@ -100,8 +100,12 @@ class CbrDataProvider
         $xml = new SimpleXMLElement($bodyContent);
         try {
             foreach ($xml->children() as $currency) {
+                $charCode = (string) $currency->CharCode;
+                if (!$charCode) {
+                    continue;
+                }
                 $result[] = new CurrencyCourse(
-                    new CurrencyEnum((string) $currency->CharCode),
+                    new CurrencyEnum($charCode),
                     (int) $currency->Nominal,
                     (float) str_replace(',', '.', $currency->Value)
                 );
