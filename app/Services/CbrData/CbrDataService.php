@@ -66,18 +66,20 @@ class CbrDataService
 
         $currencyCourses = $this->getCurrencyCoursesOnDate($dateTime);
 
+        $beforeRoubleCodeChange = $dateTime < (new DateTime('2001-01-01'));
+
         // Russian rouble since 2001
         $currencyCourses[] = new CurrencyCourse(
             CurrencyEnum::RUB(),
             1,
-            1
+            $beforeRoubleCodeChange ? 1000 : 1
         );
 
         // Russian rouble since 1994
         $currencyCourses[] = new CurrencyCourse(
             CurrencyEnum::RUR(),
             1000,
-            1
+            $beforeRoubleCodeChange ? 1000 : 1
         );
 
         return $this->courseCalculator->calculate(
@@ -131,7 +133,7 @@ class CbrDataService
         }
 
         $now = new DateTime('now');
-        if ($dateTime > $now) {
+        if ($dateTime > $now && $dateTime->diff($now)->days > 1) {
             throw new CbrDataExternalException("Incorrect date value - {$date}, date is in future");
         }
 
