@@ -7,6 +7,7 @@ use App\Services\CbrData\CbrDataService;
 use App\Services\CbrData\Exceptions\CbrDataExternalException;
 use App\Services\CbrData\Exceptions\CbrDataInternalException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CourseController
@@ -46,8 +47,10 @@ class CourseController extends Controller
                 'previousTradeDay' => $serviceResult->getPreviousTradeDay()->format('d.m.Y'),
             ]);
         } catch (CbrDataExternalException $e) {
+            Log::warning($e->getMessage());
             return response()->json(['error' => $e->getMessage()], 400);
         } catch (CbrDataInternalException $e) {
+            Log::critical($e->getMessage());
             return response()->json(['error' => 'Internal server error'], 500);
         }
     }
