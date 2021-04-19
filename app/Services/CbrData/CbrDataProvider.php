@@ -126,20 +126,10 @@ class CbrDataProvider
             throw new CbrDataInternalException('Empty currency set from CBR');
         }
 
-        $beforeRoubleCodeChange = $dateTime < (new DateTime('2001-01-01'));
-
-        // Russian rouble since 2001
-        $currencyCourses[] = new CurrencyCourse(
-            CurrencyEnum::RUB(),
-            1,
-            $beforeRoubleCodeChange ? 1000 : 1
-        );
-
-        // Russian rouble since 1994
         $currencyCourses[] = new CurrencyCourse(
             CurrencyEnum::RUR(),
-            1000,
-            $beforeRoubleCodeChange ? 1000 : 1
+            1,
+            1
         );
 
         return new CbrDataProviderResult($currencyCourses, $tradeDay);

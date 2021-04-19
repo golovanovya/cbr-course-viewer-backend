@@ -9,7 +9,6 @@ use MyCLabs\Enum\Enum;
  * Class CurrencyEnum
  * @package App\Services\CbrData
  * @method static RUR()
- * @method static RUB()
  * @method static AUD()
  * @method static AZN()
  * @method static GBP()
@@ -68,7 +67,6 @@ use MyCLabs\Enum\Enum;
 class CurrencyEnum extends Enum
 {
     private const RUR = 'RUR';
-    private const RUB = 'RUB';
     private const AUD = 'AUD';
     private const AZN = 'AZN';
     private const GBP = 'GBP';
