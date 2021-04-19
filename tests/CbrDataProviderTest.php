@@ -15,7 +15,7 @@ class CbrDataProviderTest extends TestCase
     public function testProviderDataIsCorrect()
     {
         $dataProvider = $this->getDataProvider($this->getCorrectXml());
-        $currencyCourses = $dataProvider->getCurrencyCoursesOnDate(new DateTime('2020-02-29'));
+        $currencyCourseData = $dataProvider->getCurrencyCoursesOnDate(new DateTime('2020-02-29'));
         $correctCurrencyCourses = $this->getCorrectCurrencyCourses();
 
         /**
@@ -25,7 +25,7 @@ class CbrDataProviderTest extends TestCase
             /**
              * @var CurrencyCourse $currencyCourse
              */
-            $currencyCourse = $currencyCourses[$index];
+            $currencyCourse = $currencyCourseData->getCurrencyCourses()[$index];
             $this->assertInstanceOf(CurrencyCourse::class, $currencyCourse);
             $this->assertTrue($correctCurrencyCourse->getCurrencyEnum()->equals($currencyCourse->getCurrencyEnum()));
             $this->assertEquals($correctCurrencyCourse->getNominal(), $currencyCourse->getNominal());

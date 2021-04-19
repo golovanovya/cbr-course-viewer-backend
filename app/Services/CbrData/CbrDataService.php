@@ -51,41 +51,41 @@ class CbrDataService
     }
 
     /**
-     * Returns target currency course by base currency on specific date
+     * Returns target currency course by base currency on specific date with course diff on previous trade day
      * @param string $targetCurrencyISOCode ISO char code
      * @param string $baseCurrencyISOCode ISO char code
      * @param string $date YYYY-MM-DD
-     * @return float
+     * @return CbrDataServiceResult
      * @throws CbrDataExternalException|CbrDataInternalException
      */
-    public function getCourseOnDate(string $targetCurrencyISOCode, string $baseCurrencyISOCode, string $date): float
+    public function getCourseOnDate(string $targetCurrencyISOCode, string $baseCurrencyISOCode, string $date): CbrDataServiceResult
     {
         $targetCurrency = $this->getCurrencyEnumByISOCode($targetCurrencyISOCode);
         $baseCurrency = $this->getCurrencyEnumByISOCode($baseCurrencyISOCode);
         $dateTime = $this->getDateTimeByDateString($date);
 
-        $currencyCourses = $this->getCurrencyCoursesOnDate($dateTime);
+        $currencyCoursesResult = $this->getCurrencyCoursesResultOnDate($dateTime);
 
-        $beforeRoubleCodeChange = $dateTime < (new DateTime('2001-01-01'));
+        $previousTradeDate = clone $currencyCoursesResult->getTradeDay();
+        $previousTradeDate->modify('-1 day');
+        $previousTradeDateCurrencyCoursesResult = $this->getCurrencyCoursesResultOnDate($previousTradeDate);
 
-        // Russian rouble since 2001
-        $currencyCourses[] = new CurrencyCourse(
-            CurrencyEnum::RUB(),
-            1,
-            $beforeRoubleCodeChange ? 1000 : 1
-        );
-
-        // Russian rouble since 1994
-        $currencyCourses[] = new CurrencyCourse(
-            CurrencyEnum::RUR(),
-            1000,
-            $beforeRoubleCodeChange ? 1000 : 1
-        );
-
-        return $this->courseCalculator->calculate(
+        $course = $this->courseCalculator->calculate(
             $targetCurrency,
             $baseCurrency,
-            $currencyCourses
+            $currencyCoursesResult->getCurrencyCourses()
+        );
+        $previousTradeDayCourse = $this->courseCalculator->calculate(
+            $targetCurrency,
+            $baseCurrency,
+            $previousTradeDateCurrencyCoursesResult->getCurrencyCourses()
+        );
+
+        return new CbrDataServiceResult(
+            $currencyCoursesResult->getTradeDay(),
+            $course,
+            $previousTradeDateCurrencyCoursesResult->getTradeDay(),
+            $course - $previousTradeDayCourse
         );
     }
 
@@ -143,10 +143,10 @@ class CbrDataService
     /**
      * Returns currency course on specific date using cache
      * @param DateTime $dateTime
-     * @return CurrencyCourse[]
+     * @return CbrDataProviderResult
      * @throws CbrDataInternalException
      */
-    private function getCurrencyCoursesOnDate(DateTime $dateTime): array
+    private function getCurrencyCoursesResultOnDate(DateTime $dateTime): CbrDataProviderResult
     {
         $cacheKey = self::CACHE_PREFIX . '_' . $dateTime->format('Y-m-d');
         try {
@@ -159,12 +159,12 @@ class CbrDataService
             return unserialize($serializedData);
         }
 
-        $currencyCourses = $this->dataProvider->getCurrencyCoursesOnDate($dateTime);
+        $currencyCoursesResult = $this->dataProvider->getCurrencyCoursesOnDate($dateTime);
         try {
-            $this->cache->set($cacheKey, serialize($currencyCourses));
+            $this->cache->set($cacheKey, serialize($currencyCoursesResult));
         } catch (InvalidArgumentException $e) {
             throw new CbrDataInternalException($e->getMessage(), $e->getCode(), $e);
         }
-        return $currencyCourses;
+        return $currencyCoursesResult;
     }
 }

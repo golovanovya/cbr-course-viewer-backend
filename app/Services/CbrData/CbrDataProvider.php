@@ -5,6 +5,7 @@ namespace App\Services\CbrData;
 
 use App\Services\CbrData\Exceptions\CbrDataInternalException;
 use DateTime;
+use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -57,10 +58,10 @@ class CbrDataProvider
     /**
      * Returns currency course data from CBR
      * @param DateTime $dateTime
-     * @return CurrencyCourse[]
+     * @return CbrDataProviderResult
      * @throws CbrDataInternalException
      */
-    public function getCurrencyCoursesOnDate(DateTime $dateTime): array
+    public function getCurrencyCoursesOnDate(DateTime $dateTime): CbrDataProviderResult
     {
         $uri = (clone $this->uri)
             ->withScheme(self::CBR_DATA_SCHEME)
@@ -96,15 +97,22 @@ class CbrDataProvider
             throw new CbrDataInternalException('Empty response from CBR');
         }
 
-        $result = [];
+        $currencyCourses = [];
         $xml = new SimpleXMLElement($bodyContent);
+
+        try {
+            $tradeDay = new DateTime((string) $xml->attributes()['Date']);
+        } catch (Exception $e) {
+            throw new CbrDataInternalException($e->getMessage(), $e->getCode(), $e);
+        }
+
         try {
             foreach ($xml->children() as $currency) {
                 $charCode = (string) $currency->CharCode;
                 if (!$charCode) {
                     continue;
                 }
-                $result[] = new CurrencyCourse(
+                $currencyCourses[] = new CurrencyCourse(
                     new CurrencyEnum($charCode),
                     (int) $currency->Nominal,
                     (float) str_replace(',', '.', $currency->Value)
@@ -114,10 +122,26 @@ class CbrDataProvider
             throw new CbrDataInternalException($e->getMessage(), $e->getCode(), $e);
         }
 
-        if (empty($result)) {
+        if (empty($currencyCourses)) {
             throw new CbrDataInternalException('Empty currency set from CBR');
         }
 
-        return $result;
+        $beforeRoubleCodeChange = $dateTime < (new DateTime('2001-01-01'));
+
+        // Russian rouble since 2001
+        $currencyCourses[] = new CurrencyCourse(
+            CurrencyEnum::RUB(),
+            1,
+            $beforeRoubleCodeChange ? 1000 : 1
+        );
+
+        // Russian rouble since 1994
+        $currencyCourses[] = new CurrencyCourse(
+            CurrencyEnum::RUR(),
+            1000,
+            $beforeRoubleCodeChange ? 1000 : 1
+        );
+
+        return new CbrDataProviderResult($currencyCourses, $tradeDay);
     }
 }

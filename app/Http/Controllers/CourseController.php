@@ -38,8 +38,13 @@ class CourseController extends Controller
     public function getCourse(string $targetCurrency, string $baseCurrency, string $date): JsonResponse
     {
         try {
-            $course = $this->cbrDataService->getCourseOnDate($targetCurrency, $baseCurrency, $date);
-            return response()->json(['course' => (float) number_format($course, 4, '.', '')]);
+            $serviceResult = $this->cbrDataService->getCourseOnDate($targetCurrency, $baseCurrency, $date);
+            return response()->json([
+                'course' => (float) number_format($serviceResult->getCourse(), 4, '.', ''),
+                'tradeDay' => $serviceResult->getTradeDay()->format('d.m.Y'),
+                'courseDiff' => (float) number_format($serviceResult->getPreviousTradeDayCourseDiff(), 4, '.', ''),
+                'previousTradeDay' => $serviceResult->getPreviousTradeDay()->format('d.m.Y'),
+            ]);
         } catch (CbrDataExternalException $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         } catch (CbrDataInternalException $e) {
