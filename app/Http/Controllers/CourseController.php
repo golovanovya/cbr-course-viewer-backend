@@ -16,20 +16,6 @@ use Illuminate\Support\Facades\Log;
 class CourseController extends Controller
 {
     /**
-     * @var CbrDataService
-     */
-    private $cbrDataService;
-
-    /**
-     * CourseController constructor.
-     * @param CbrDataService $cbrDataService
-     */
-    public function __construct(CbrDataService $cbrDataService)
-    {
-        $this->cbrDataService = $cbrDataService;
-    }
-
-    /**
      * Returns target currency course by base currency on specific date
      * @param string $targetCurrency ISO char code
      * @param string $baseCurrency ISO char code
@@ -39,7 +25,7 @@ class CourseController extends Controller
     public function getCourse(string $targetCurrency, string $baseCurrency, string $date): JsonResponse
     {
         try {
-            $serviceResult = $this->cbrDataService->getCourseOnDate($targetCurrency, $baseCurrency, $date);
+            $serviceResult = cbr()->getCourseOnDate($targetCurrency, $baseCurrency, $date);
             return response()->json([
                 'course' => (float) number_format($serviceResult->getCourse(), 4, '.', ''),
                 'tradeDay' => $serviceResult->getTradeDay()->format('d.m.Y'),
@@ -61,6 +47,6 @@ class CourseController extends Controller
      */
     public function getAvailableCurrencies(): JsonResponse
     {
-        return response()->json(['currencies' => $this->cbrDataService->getCurrencies()]);
+        return response()->json(['currencies' => cbr()->getCurrencies()]);
     }
 }
